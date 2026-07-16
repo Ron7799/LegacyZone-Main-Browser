@@ -221,22 +221,13 @@ app.get("/api/check-admin", (req, res) => {
 
 app.get("/admin", (req, res) => {
 
-    if (!req.user) {
+    console.log("ADMIN PAGE");
+    console.log(req.user);
 
-        return res.redirect("/login.html");
-
-    }
-
-    if (!config.admins.includes(req.user.id)) {
-
-        return res.send("❌ אין לך הרשאה לפאנל");
-
-    }
 
     res.sendFile(__dirname + "/admin.html");
 
 });
-
 // ==========================
 // Events
 // ==========================
