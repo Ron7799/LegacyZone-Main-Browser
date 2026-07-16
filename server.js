@@ -133,6 +133,13 @@ function isAdmin(req){
 // Discord Login
 // ==========================
 
+app.get("/auth/discord",
+
+    passport.authenticate("discord")
+
+);
+
+
 app.get("/auth/discord/callback",
     (req, res, next) => {
 
