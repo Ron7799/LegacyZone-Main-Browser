@@ -133,23 +133,28 @@ function isAdmin(req){
 // Discord Login
 // ==========================
 
-app.get("/auth/discord",
-
-    passport.authenticate("discord")
-
-);
-
-
 app.get("/auth/discord/callback",
+    (req, res, next) => {
+
+        console.log("1 - CALLBACK START");
+
+        next();
+
+    },
+
     passport.authenticate("discord", {
+
         failureRedirect: "/login.html"
+
     }),
+
     (req, res) => {
 
-        console.log("=== DISCORD LOGIN SUCCESS ===");
+        console.log("2 - LOGIN OK");
+
         console.log(req.user);
 
-        res.send("התחברות הצליחה: " + req.user.username);
+        res.send("DISCORD OK");
 
     }
 );
