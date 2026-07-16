@@ -81,6 +81,11 @@ passport.use(new DiscordStrategy({
 
 app.use(express.static(__dirname));
 
+app.get("/test-admin", (req,res)=>{
+
+    res.sendFile(__dirname + "/admin.html");
+
+});
 
 // ==========================
 // Database
