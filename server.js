@@ -140,21 +140,17 @@ app.get("/auth/discord",
 );
 
 
-app.get(
-    "/auth/discord/callback",
-
-    (req, res, next) => {
-        console.log("CALLBACK REACHED");
-        next();
-    },
-
+app.get("/auth/discord/callback",
     passport.authenticate("discord", {
         failureRedirect: "/login.html"
     }),
-
     (req, res) => {
-        console.log("USER:", req.user);
-        res.redirect("/admin");
+
+        console.log("=== DISCORD LOGIN SUCCESS ===");
+        console.log(req.user);
+
+        res.send("התחברות הצליחה: " + req.user.username);
+
     }
 );
 
