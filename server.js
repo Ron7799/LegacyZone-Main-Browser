@@ -217,11 +217,9 @@ app.get("/api/check-admin", (req, res) => {
 
 app.get("/admin", (req, res) => {
 
-    console.log("ADMIN PAGE");
-    console.log(req.user);
+    console.log("Trying to open admin");
 
-
-    res.sendFile(__dirname + "/admin.html");
+    res.send("ADMIN WORKS");
 
 });
 // ==========================
