@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>עדכונים</title>
+
+    <link rel="stylesheet" href="style.css">
+
+
+    
+</head>
+
+<body>
+
+    <nav>
+    <a href="index.html">🏠 בית</a>
+    <a href="about.html">🌐 מידע על האתר</a>
+    <a href="rules.html">📜 חוקים</a>
+    <a href="founders.html">👑 מייסדים</a>
+    <a href="updates.html">📢 עדכונים</a>
+    <a href="events.html">📅 אירועים</a>
+    <a href="links.html">🔗 קישורים</a>
+    <a href="faq.html">❓ שאלות נפוצות</a>
+      <a href="login.html">⚙️ פאנל מנהלים</a>
+    </nav>
+
+
+    <main>
+
+        <h1>📢 עדכוני האתר והשרת</h1>
+
+
+        <div id="updates-container">
+
+            <h2>עדכון ראשון</h2>
+
+            <h3>📅 11/07/2026</h3>
+
+            <p>
+                הוספנו את האתר החדש לקהילה.
+                בהמשך יתווספו עוד מערכות ותכנים.
+            </p>
+
+        </div>
+
+
+    </main>
+
+
+    <footer>
+        <p>
+           כול הזכויות שמורת לLegacy Zone
+        </p>
+    </footer>
+
+    <script>
+
+async function loadUpdates(){
+
+    const response = await fetch("/.netlify/functions/updates")
+
+    const updates = await response.json();
+
+
+    const container = document.getElementById("updates-container");
+
+
+    container.innerHTML = "";
+
+
+    if(updates.length === 0){
+
+        container.innerHTML = `
+        <div class="update-card">
+            <h2>אין כרגע עדכונים</h2>
+        </div>
+        `;
+
+        return;
+
+    }
+
+
+
+    updates.reverse().forEach(update => {
+
+
+        container.innerHTML += `
+
+        <div class="update-card">
+
+            <h2>
+            📢 ${update.title}
+            </h2>
+
+            <h3>
+            📅 ${update.date}
+            </h3>
+
+            <p>
+            ${update.message}
+            </p>
+
+        </div>
+
+        `;
+
+
+    });
+
+
+}
+
+
+loadUpdates();
+
+
+</script>
+
+</body>
+
+</html>

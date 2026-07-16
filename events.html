@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אירועים</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav>
+    <a href="index.html">🏠 בית</a>
+    <a href="about.html">🌐 מידע על האתר</a>
+    <a href="rules.html">📜 חוקים</a>
+    <a href="founders.html">👑 מייסדים</a>
+    <a href="updates.html">📢 עדכונים</a>
+    <a href="events.html">📅 אירועים</a>
+    <a href="links.html">🔗 קישורים</a>
+    <a href="faq.html">❓ שאלות נפוצות</a>
+    <a href="login.html">⚙️ פאנל מנהלים</a>
+    </nav>
+
+
+
+<main>
+
+
+<h1>
+📅 אירועים עתידיים
+</h1>
+
+
+
+<div id="events-container"></div>
+
+
+
+</main>
+
+
+
+
+<script>
+
+
+async function loadEvents(){
+
+
+    const response = await fetch("/.netlify/functions/events");
+
+
+    const events = await response.json();
+
+
+
+    const container =
+    document.getElementById("events-container");
+
+
+
+    container.innerHTML = "";
+
+
+
+    if(events.length === 0){
+
+
+        container.innerHTML = `
+
+        <div class="event-card">
+
+            <h2>
+            אין כרגע אירועים
+            </h2>
+
+        </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+
+
+
+    events.reverse().forEach(event=>{
+
+
+        container.innerHTML += `
+
+
+        <div class="event-card">
+
+
+            <h2>
+            🎉 ${event.title}
+            </h2>
+
+
+
+            <h3>
+            📅 תאריך: ${event.date}
+            </h3>
+
+
+
+            <h3>
+            ⏰ שעה: ${event.time}
+            </h3>
+
+
+
+            <p>
+            📍 מקום: ${event.location}
+            </p>
+
+
+
+            <p>
+            🎁 פרס: ${event.prize}
+            </p>
+
+
+
+            <p>
+            ${event.description}
+            </p>
+
+
+        </div>
+
+
+        `;
+
+
+    });
+
+
+
+}
+
+
+
+loadEvents();
+
+
+</script>
+
+
+
+</body>
+
+</html>

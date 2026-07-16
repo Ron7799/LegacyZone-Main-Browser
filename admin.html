@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>פאנל מנהלים</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+<a href="index.html">🏠 בית</a>
+<a href="updates.html">📢 עדכונים</a>
+<a href="events.html">📅 אירועים</a>
+<a href="/logout">🚪 יציאה</a>
+
+</nav>
+
+
+
+<main>
+
+
+<h1>
+⚙️ פאנל מנהלים
+</h1>
+
+
+
+<div class="admin-card">
+
+
+<h2>
+📅 יצירת אירוע
+</h2>
+
+
+<input id="title" placeholder="שם האירוע">
+
+
+<br><br>
+
+
+<input id="date" type="date">
+
+
+<br><br>
+
+
+<input id="time" type="time">
+
+
+<br><br>
+
+
+<input id="location" placeholder="מיקום">
+
+
+<br><br>
+
+
+<input id="prize" placeholder="פרס">
+
+
+<br><br>
+
+
+<textarea id="description" placeholder="תיאור"></textarea>
+
+
+<br><br>
+
+
+<button onclick="sendEvent()">
+
+📅 פרסם אירוע
+
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="admin-card">
+
+
+<h2>
+📢 יצירת עדכון
+</h2>
+
+
+<input id="updateTitle" placeholder="כותרת">
+
+
+<br><br>
+
+
+<textarea id="updateMessage" placeholder="תוכן"></textarea>
+
+
+<br><br>
+
+
+<button onclick="sendUpdate()">
+
+📢 פרסם עדכון
+
+</button>
+
+
+</div>
+
+<script>
+
+
+// בדיקת הרשאה
+
+async function checkAdmin(){
+
+
+    const response = await fetch("/api/check-admin");
+
+
+    const data = await response.json();
+
+
+    if(!data.admin){
+
+        window.location.href="/login.html";
+
+    }
+
+
+}
+
+
+checkAdmin();
+
+
+
+// שליחת אירוע
+
+async function sendEvent(){
+
+
+    const event = {
+
+
+        title:
+        document.getElementById("title").value,
+
+
+        date:
+        document.getElementById("date").value,
+
+
+        time:
+        document.getElementById("time").value,
+
+
+        location:
+        document.getElementById("location").value,
+
+
+        prize:
+        document.getElementById("prize").value,
+
+
+        description:
+        document.getElementById("description").value
+
+    };
+
+
+
+    const response = await fetch("/api/events",{
+
+        method:"POST",
+
+        headers:{
+
+            "Content-Type":"application/json"
+
+        },
+
+        body:JSON.stringify(event)
+
+    });
+
+
+
+    const data = await response.json();
+
+
+
+    if(data.success){
+
+        alert("✅ האירוע פורסם");
+
+    }
+
+    else{
+
+        alert("❌ אין הרשאה");
+
+    }
+
+
+}
+
+
+
+
+
+// שליחת עדכון
+
+async function sendUpdate(){
+
+
+    const update = {
+
+
+        title:
+        document.getElementById("updateTitle").value,
+
+
+        message:
+        document.getElementById("updateMessage").value
+
+
+    };
+
+
+
+    const response = await fetch("/api/updates",{
+
+        method:"POST",
+
+        headers:{
+
+            "Content-Type":"application/json"
+
+        },
+
+        body:JSON.stringify(update)
+
+    });
+
+
+
+    const data = await response.json();
+
+
+
+    if(data.success){
+
+        alert("✅ העדכון פורסם");
+
+    }
+
+    else{
+
+        alert("❌ אין הרשאה");
+
+    }
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
