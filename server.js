@@ -227,13 +227,16 @@ app.get("/api/check-admin", (req, res) => {
 // Admin Page
 // ==========================
 
-app.get("/admin", (req, res) => {
+app.get("/auth/discord/callback",
+    passport.authenticate("discord", {
+        failureRedirect: "/login.html"
+    }),
+    (req, res) => {
 
-    console.log("Trying to open admin");
+        res.redirect("/admin.html");
 
-    res.send("ADMIN WORKS");
-
-});
+    }
+);
 // ==========================
 // Events
 // ==========================
